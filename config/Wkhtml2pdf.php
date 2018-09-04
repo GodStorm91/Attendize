@@ -3,7 +3,7 @@
 return [
 
     'debug'       => env('APP_DEBUG_PDF', false),
-    'binpath'     => 'lib/',
-    'binfile'     => env('WKHTML2PDF_BIN_FILE', 'wkhtmltopdf-amd64'),
+    'binpath'     => '/usr/local/bin',
+    'binfile'     => env('WKHTML2PDF_BIN_FILE', 'wkhtmltopdf'),
     'output_mode' => 'I',
 ];

@@ -36,6 +36,25 @@
     </div>
 </section>
 
+{{--Komoju--}}
+<section class="payment_gateway_options" id="gateway_{{config('attendize.payment_gateway_komoju')}}">
+    <h4>@lang("ManageAccount.komoju_settings")</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('komoju[apiKey]', trans("ManageAccount.komoju_secret_key"), array('class'=>'control-label ')) !!}
+                {!! Form::text('komoju[apiKey]', $account->getGatewayConfigVal(config('attendize.payment_gateway_komoju'), 'apiKey'),[ 'class'=>'form-control'])  !!}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('publishableKey', trans("ManageAccount.komoju_publishable_key"), array('class'=>'control-label ')) !!}
+                {!! Form::text('komoju[publishableKey]', $account->getGatewayConfigVal(config('attendize.payment_gateway_komoju'), 'publishableKey'),[ 'class'=>'form-control'])  !!}
+            </div>
+        </div>
+    </div>
+</section>
+
 {{--Paypal--}}
 <section class="payment_gateway_options"  id="gateway_{{config('attendize.payment_gateway_paypal')}}">
     <h4>@lang("ManageAccount.paypal_settings")</h4>
