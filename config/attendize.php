@@ -60,8 +60,8 @@ return [
     'question_radio_single'         => 6,
 
 
-    'default_timezone'           => 30, #Europe/Dublin
-    'default_currency'           => 2, #Euro
+    'default_timezone'           => 98, #Asia/Tokyo (GMT +9)
+    'default_currency'           => 11, #JPY
     'default_date_format'        => 'Y-m-d',
     'default_date_picker_format' => 'Y-m-d',
     'default_datetime_format'    => 'Y-m-d, H:i',
