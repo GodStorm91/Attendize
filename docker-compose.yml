@@ -69,6 +69,21 @@ services:
       - "mysql-data:/var/lib/mysql"
     networks:
     - attendizenet
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    env_file:
+      - ./.env
+    environment:
+      PMA_HOST: ${DB_HOST}
+      PMA_PORT: ${DB_PORT}
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    ports:
+    - 8088:80
+    depends_on:
+    - db
+    networks:
+    - attendizenet
   maildev:
     image: djfarrelly/maildev
     ports:

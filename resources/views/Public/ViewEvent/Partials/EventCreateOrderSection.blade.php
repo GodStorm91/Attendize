@@ -211,8 +211,35 @@
                             </div>
                         </div>
                     </div>
+                    @else
+                        <div class="online_payment">
+                            {!! Form::label('select-payment-method', trans("Public_ViewEvent.select_payment_method")) !!}
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        {!! Form::radio('payment_method', 'konbini', true); !!} Konbini
+                                    </div>
 
-                @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        {!! Form::radio('payment_method', 'bank_transfer', false); !!} Bank Transfer
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="form-group">
+                                        {!! Form::radio('payment_method', 'credit_card', false); !!} Credit Card
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    @endif
 
                 @endif
 
@@ -224,6 +251,7 @@
 
                {!! Form::hidden('is_embedded', $is_embedded) !!}
                {!! Form::submit(trans("Public_ViewEvent.checkout_submit"), ['class' => 'btn btn-lg btn-success card-submit', 'style' => 'width:100%;']) !!}
+                {!! Form::close() !!}
 
             </div>
         </div>
