@@ -396,23 +396,27 @@ class EventCheckoutController extends Controller
                         break;
                     case config('attendize.payment_gateway_komoju'):
                         $merchant_uuid = config('komoju.merchant_uuid');
-                        $payment_method = $request->get('payment_method');
                         $api_key = $ticket_order['account_payment_gateway']['config']['apiKey'];
+                        $return_url = 'https://requestbin.fullcontact.com/vw3g7bvw?success=1'; // debugging
+                        $cancel_url = 'https://requestbin.fullcontact.com/vw3g7bvw?cancel=1'; // debugging
 
                         $transaction_data += [
                             'locale' => 'ja',
                             'account_id' => $merchant_uuid,
                             'api_key' => $api_key,
-                            'payment_method' => $payment_method, // $payment_method
+                            'payment_method' => $request->get('payment_method'),
                             'receipt_email' => $request->get('order_email'),
-                            'cancelUrl' => 'https://requestbin.fullcontact.com/vw3g7bvw?cancel=1',
-                            'returnUrl' => 'https://requestbin.fullcontact.com/vw3g7bvw?success=1',
-                            'customerFamilyName' => $request->get('order_last_name'),
-                            'customerGivenName' => $request->get('order_first_name'),
                             'customerEmail' => $request->get('order_email'),
+                            'customerPhone' => $request->get('order_phone'), // For future
+                            'returnUrl' => $return_url,
+                            'cancelUrl' => $cancel_url,
+                            'customerFamilyName' => $request->get('order_last_name'),
+                            'customerFamilyNameKana' => $request->get('order_last_name_kana'), // For future
+                            'customerGivenName' => $request->get('order_first_name'),
+                            'customerGivenNameKana' => $request->get('order_first_name_kana'), // For future
                             'tax' => '0',
                             'transaction_reference' => uniqid(),
-                            'timestamp' => time(),
+                            'timestamp' => '' . time(),
                         ];
                         break;
                     default:
