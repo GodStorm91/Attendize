@@ -544,6 +544,7 @@ class EventCheckoutController extends Controller
                 $request_data,
                 config('attendize.order_awaiting_payment')
             );
+            $order->is_payment_received = 0;
             $order->save();
 
             // TODO: update following stats data when payment captured event comes to webhook
@@ -594,15 +595,14 @@ class EventCheckoutController extends Controller
             /*
              * Create the order
              */
-            $order_status = config('attendize.order_complete');
-            if (isset($request_data['pay_offline'])) {
-                $order_status = config('attendize.order_awaiting_payment');
-            }
             $order = $orderService->newOrder(
                 $ticket_order,
                 $request_data,
-                $order_status
+                config('attendize.order_complete')
             );
+            if (isset($request_data['pay_offline'])) {
+                $order->order_status_id = config('attendize.order_awaiting_payment');
+            }
             $order->save();
 
             $orderService->updateSaleVolumes($order);
