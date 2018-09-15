@@ -100,26 +100,26 @@ class Order
     /**
      * Update the event sales volume
      *
-     * @param $organiser_booking_fee
+     * @param $order
      */
-    public function updateSaleVolumes($organiser_booking_fee)
+    public function updateSaleVolumes($order)
     {
         $this->event->increment('sales_volume', $this->getGrandTotal());
-        $this->event->increment('organiser_fees_volume', $organiser_booking_fee);
+        $this->event->increment('organiser_fees_volume', $order->organiser_booking_fee);
     }
 
     /**
      * Update affiliates stats
      *
+     * @param $order
      * @param $ticket_order
-     * @param $sales_volume
      */
-    public function updateAffiliateStats($ticket_order, $sales_volume)
+    public function updateAffiliateStats($order, $ticket_order)
     {
         if ($ticket_order['affiliate_referral']) {
             $affiliate = Affiliate::where('name', '=', $ticket_order['affiliate_referral'])
                 ->where('event_id', '=', $this->event->id)->first();
-            $affiliate->increment('sales_volume', $sales_volume);
+            $affiliate->increment('sales_volume', $order->amount + $order->organiser_booking_fee);
             $affiliate->increment('tickets_sold', $ticket_order['total_ticket_quantity']);
         }
     }
@@ -128,10 +128,9 @@ class Order
      * Update the event stats
      *
      * @param $ticket_order
-     * @param $sales_volume
-     * @param $organiser_fees_volume
+     * @param $order
      */
-    public function updateEventStats($ticket_order, $sales_volume, $organiser_fees_volume)
+    public function updateEventStats($order, $ticket_order)
     {
 
         $event_stats = EventStats::updateOrCreate([
@@ -141,8 +140,8 @@ class Order
         $event_stats->increment('tickets_sold', $ticket_order['total_ticket_quantity']);
 
         if ($ticket_order['order_requires_payment']) {
-            $event_stats->increment('sales_volume', $sales_volume);
-            $event_stats->increment('organiser_fees_volume', $organiser_fees_volume);
+            $event_stats->increment('sales_volume', $order->amount);
+            $event_stats->increment('organiser_fees_volume', $order->organiser_booking_fee);
         }
     }
 

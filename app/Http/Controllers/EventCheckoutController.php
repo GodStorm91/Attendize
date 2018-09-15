@@ -583,17 +583,13 @@ class EventCheckoutController extends Controller
      */
     public function completeOrder($event_id, $return_json = true)
     {
-
         DB::beginTransaction();
-
         try {
             $ticket_order = session()->get('ticket_order_' . $event_id);
             $request_data = $ticket_order['request_data'][0];
             $event = Event::findOrFail($ticket_order['event_id']);
 
             $orderService = new OrderService($ticket_order['order_total'], $ticket_order['total_booking_fee'], $event);
-
-            Log::debug($request_data);
 
             /*
              * Create the order
@@ -602,7 +598,6 @@ class EventCheckoutController extends Controller
             if (isset($request_data['pay_offline'])) {
                 $order_status = config('attendize.order_awaiting_payment');
             }
-            Log::debug("Order status: " . $order_status);
             $order = $orderService->newOrder(
                 $ticket_order,
                 $request_data,
@@ -610,25 +605,9 @@ class EventCheckoutController extends Controller
             );
             $order->save();
 
-            /*
-             * Update the event sales volume
-             */
-            $orderService->updateSaleVolumes($order->organiser_booking_fee);
-
-            /*
-             * Update affiliates stats stats
-             */
-            $orderService->updateAffiliateStats($ticket_order, $order->amount + $order->organiser_booking_fee);
-
-            /*
-             * Update the event stats
-             */
-
-            $orderService->updateEventStats($ticket_order, $order->amount, $order->organiser_booking_fee);
-
-            /*
-             * Add the attendees
-             */
+            $orderService->updateSaleVolumes($order);
+            $orderService->updateAffiliateStats($order, $ticket_order);
+            $orderService->updateEventStats($order, $ticket_order);
             $orderService->addAttendees($order, $ticket_order, $request_data);
 
             //save the order to the database
