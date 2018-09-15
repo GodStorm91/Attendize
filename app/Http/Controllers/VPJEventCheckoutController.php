@@ -8,7 +8,7 @@ use App\Models\Event;
 use App\Models\Order;
 use App\Models\ReservedTickets;
 use App\Models\Ticket;
-use App\Services\Checkout as CheckoutService;
+use App\Services\Payment as PaymentService;
 use App\Services\Order as OrderService;
 use Carbon\Carbon;
 use Cookie;
@@ -324,13 +324,13 @@ class VPJEventCheckoutController extends Controller
             return $this->completeOrder($event_id);
         }
 
-        $checkout_service = new CheckoutService($request, $event);
+        $payment_service = new PaymentService($request, $event);
         $order_service = new OrderService($ticket_order['order_total'], $ticket_order['total_booking_fee'], $event);
         $order_service->calculateFinalCosts();
 
         try {
-            $transaction_data = $checkout_service->makeTransactionData($order_service->getGrandTotal(), $ticket_order);
-            $gateway = $checkout_service->getPaymentGateway($ticket_order);
+            $transaction_data = $payment_service->makeTransactionData($order_service->getGrandTotal(), $ticket_order);
+            $gateway = $payment_service->getGateway($ticket_order);
             $transaction = $gateway->purchase($transaction_data);
             $response = $transaction->send();
 

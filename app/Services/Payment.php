@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Omnipay;
 
-class Checkout {
+class Payment {
 
     public $request;
     public $event;
@@ -25,7 +25,7 @@ class Checkout {
      */
     public function makeTransactionData($amount, $ticket_order) {
 
-        $gateway = $this->getPaymentGateway($ticket_order);
+        $gateway = $this->getGateway($ticket_order);
 
         $order_email = $this->request->get('order_email');
         $transaction_data = $transaction_data = [
@@ -118,7 +118,7 @@ class Checkout {
      * @param $ticket_order
      * @return mixed
      */
-    public function getPaymentGateway($ticket_order) {
+    public function getGateway($ticket_order) {
         if (config('attendize.enable_dummy_payment_gateway') == TRUE) {
             $gateway = Omnipay::create('Dummy');
             $gateway->initialize();
