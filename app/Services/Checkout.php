@@ -15,6 +15,14 @@ class Checkout {
         $this->event = $event;
     }
 
+    /**
+     *
+     * Generate payment transaction data for current order
+     *
+     * @param $amount
+     * @param $ticket_order
+     * @return array
+     */
     public function makeTransactionData($amount, $ticket_order) {
 
         $gateway = $this->getPaymentGateway($ticket_order);
@@ -104,7 +112,12 @@ class Checkout {
         return $transaction_data;
     }
 
-
+    /**
+     * Get current payment gateway
+     *
+     * @param $ticket_order
+     * @return mixed
+     */
     public function getPaymentGateway($ticket_order) {
         if (config('attendize.enable_dummy_payment_gateway') == TRUE) {
             $gateway = Omnipay::create('Dummy');
