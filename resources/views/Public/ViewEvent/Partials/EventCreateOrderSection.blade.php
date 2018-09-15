@@ -268,12 +268,12 @@
         key: "{{ $account_payment_gateway->config['publishableKey'] }}",
         token: function (token) {
             payForm.komojuToken.value = token.id;
-            toggleSubmitDisabled($("#komoju_pay_button"));
-            payForm.submit();
+            $(payForm).trigger('submit')
         }
     });
 
     document.getElementById("komoju_pay_button").addEventListener("click", function (e) {
+        e.preventDefault();
         handler.open({
             amount: '{{  $orderService->getGrandTotal() }}',
             endpoint: "https://komoju.com",
@@ -286,8 +286,7 @@
                 "credit_card", "konbini"
             ]
         });
-
-        e.preventDefault();
+        return false;
     });
 </script>
 @endif

@@ -429,7 +429,7 @@ class EventCheckoutController extends Controller
 
                     session()->push('ticket_order_' . $event_id . '.transaction_id', $response->getTransactionReference());
 
-                    return $this->completeOrder($event_id, false);
+                    return $this->completeOrder($event_id);
 
                 } elseif ($response->isRedirect()) {
 
@@ -524,7 +524,7 @@ class EventCheckoutController extends Controller
         }
     }
 
-    public function completePendingOrder($event_id)
+    public function completePendingOrder($event_id, $return_json = true)
     {
 
         DB::beginTransaction();
@@ -547,12 +547,9 @@ class EventCheckoutController extends Controller
             $order->is_payment_received = 0;
             $order->save();
 
-            // TODO: update following stats data when payment captured event comes to webhook
-            // affiliate_referral, total_ticket_quantity (= count attendee by order)
-            //$orderService->updateSaleVolumes($order->organiser_booking_fee);
-            //$orderService->updateAffiliateStats($ticket_order, $order->amount + $order->organiser_booking_fee);
-            //$orderService->updateEventStats($ticket_order, $order->amount, $order->organiser_booking_fee);
-
+            $orderService->updateSaleVolumes($order);
+            $orderService->updateAffiliateStats($order, $ticket_order);
+            $orderService->updateEventStats($order, $ticket_order);
             $orderService->addAttendees($order, $ticket_order, $request_data);
 
             //save the order to the database
@@ -565,6 +562,16 @@ class EventCheckoutController extends Controller
             return response()->json([
                 'status'  => 'error',
                 'message' => 'Whoops! There was a problem processing your order. Please try again.'
+            ]);
+        }
+
+        if ($return_json) {
+            return response()->json([
+                'status'      => 'success',
+                'redirectUrl' => route('showOrderDetails', [
+                    'is_embedded'     => $this->is_embedded,
+                    'order_reference' => $order->order_reference,
+                ]),
             ]);
         }
 
