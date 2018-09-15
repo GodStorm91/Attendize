@@ -27,6 +27,7 @@ services:
       - redis
     volumes:
       - .:/usr/share/nginx/html/attendize
+      - ./vendor/nitmedia/wkhtml2pdf/src/Nitmedia/Wkhtml2pdf/lib/wkhtmltopdf-amd64:/usr/local/bin/wkhtmltopdf-amd64
     networks: 
       - attendizenet
   composer:
@@ -49,6 +50,7 @@ services:
       - redis
     volumes:
       - .:/usr/share/nginx/html/attendize
+      - ./vendor/nitmedia/wkhtml2pdf/src/Nitmedia/Wkhtml2pdf/lib/wkhtmltopdf-amd64:/usr/local/bin/wkhtmltopdf-amd64
     command: php artisan queue:work --daemon
     networks:
       - attendizenet

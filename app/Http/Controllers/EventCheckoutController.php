@@ -395,28 +395,13 @@ class EventCheckoutController extends Controller
                         ];
                         break;
                     case config('attendize.payment_gateway_komoju'):
-                        $merchant_uuid = config('komoju.merchant_uuid');
                         $api_key = $ticket_order['account_payment_gateway']['config']['apiKey'];
-                        $return_url = 'https://requestbin.fullcontact.com/vw3g7bvw?success=1'; // debugging
-                        $cancel_url = 'https://requestbin.fullcontact.com/vw3g7bvw?cancel=1'; // debugging
+                        $token = $request->get('komojuToken');
 
                         $transaction_data += [
-                            'locale' => 'ja',
-                            'account_id' => $merchant_uuid,
+                            'token' => $token,
                             'api_key' => $api_key,
-                            'payment_method' => $request->get('payment_method'),
                             'receipt_email' => $request->get('order_email'),
-                            'customerEmail' => $request->get('order_email'),
-                            'customerPhone' => $request->get('order_phone'), // For future
-                            'returnUrl' => $return_url,
-                            'cancelUrl' => $cancel_url,
-                            'customerFamilyName' => $request->get('order_last_name'),
-                            'customerFamilyNameKana' => $request->get('order_last_name_kana'), // For future
-                            'customerGivenName' => $request->get('order_first_name'),
-                            'customerGivenNameKana' => $request->get('order_first_name_kana'), // For future
-                            'tax' => '0',
-                            'transaction_reference' => uniqid(),
-                            'timestamp' => '' . time(),
                         ];
                         break;
                     default:
@@ -432,10 +417,24 @@ class EventCheckoutController extends Controller
 
                 $response = $transaction->send();
 
-                if ($response->isSuccessful()) {
+                Log::info('Purchase request sent!');
+                Log::info($response->getData());
 
-                    session()->push('ticket_order_' . $event_id . '.transaction_id',
-                        $response->getTransactionReference());
+                if ($response->isPending()) {
+
+                    // For pending payment, we complete current order with status = order_awaiting_payment.
+                    // This status will be updated later when payment is done
+                    session()->push('ticket_order_' . $event_id . '.transaction_id', $response->getTransactionReference());
+                    session()->push('ticket_order_' . $event_id . '.order_awaiting_payment', '1');
+
+                    // TODO: Save payment token?
+
+                    // Not return json in checkout page and go to order detail page directly
+                    return $this->completeOrder($event_id, false);
+
+                } else if ($response->isSuccessful()) {
+
+                    session()->push('ticket_order_' . $event_id . '.transaction_id', $response->getTransactionReference());
 
                     return $this->completeOrder($event_id);
 
@@ -531,6 +530,7 @@ class EventCheckoutController extends Controller
             ]);
         }
 
+
     }
 
     /**
@@ -567,7 +567,12 @@ class EventCheckoutController extends Controller
             $order->first_name = $request_data['order_first_name'];
             $order->last_name = $request_data['order_last_name'];
             $order->email = $request_data['order_email'];
-            $order->order_status_id = isset($request_data['pay_offline']) ? config('attendize.order_awaiting_payment') : config('attendize.order_complete');
+            if (isset($ticket_order['order_awaiting_payment'])) {
+                $order->order_status_id = config('attendize.order_awaiting_payment');
+            } else {
+                $order->order_status_id = isset($request_data['pay_offline']) ? config('attendize.order_awaiting_payment') : config('attendize.order_complete');
+            }
+
             $order->amount = $ticket_order['order_total'];
             $order->booking_fee = $ticket_order['booking_fee'];
             $order->organiser_booking_fee = $ticket_order['organiser_booking_fee'];

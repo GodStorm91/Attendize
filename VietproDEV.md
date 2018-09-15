@@ -18,12 +18,6 @@ This is website for events organized by Vietpro, customized based on open source
   cp .env.example .env
   ```
   
-- Append config for `KOMOJU_MERCHANT_UUID` into `.env`
-  
-  ```bash
-  KOMOJU_MERCHANT_UUID=xxxxxxxxx
-  ```
-  
 - Start docker-compose and follow instructions in [Attendize](https://github.com/Attendize/Attendize)
   
   ```bash
