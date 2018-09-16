@@ -106,6 +106,22 @@ Route::group(
         ]);
     });
 
+    /**
+     * Komoju webhook
+     */
+    Route::group(['prefix' => 'webhook'], function () {
+
+        Route::any('payment/captured', [
+            'as'   => 'handleCapturedEvent',
+            'uses' => 'WebhookController@handleCapturedEvent',
+        ]);
+
+        Route::any('payment/authorized', [
+            'as'   => 'handleAuthorizedEvent',
+            'uses' => 'WebhookController@handleAuthorizedEvent',
+        ]);
+    });
+
     /*
      * Public organiser page routes
      */
