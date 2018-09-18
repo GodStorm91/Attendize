@@ -12,11 +12,11 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
-class HandleCapturedPaymentWebhook implements ShouldQueue
+class HandleKomojuWebhook implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $payload;
+    protected $payload = [];
 
     /**
      * Create a new job instance.
@@ -28,6 +28,15 @@ class HandleCapturedPaymentWebhook implements ShouldQueue
         $this->payload = json_decode($payload, true);
     }
 
+    public function getTransactionId()
+    {
+        return isset($this->payload['data']) ? $this->payload['data']['id'] : "";
+    }
+
+    public function isPaymentCaptured() {
+        return $this->payload['type'] == 'payment.captured';
+    }
+
     /**
      * Execute the job.
      *
@@ -35,8 +44,20 @@ class HandleCapturedPaymentWebhook implements ShouldQueue
      */
     public function handle()
     {
-        Log::info("Processing HandleCapturedPaymentWebhook: transaction_id=" . $this->getTransactionId());
+        Log::info("Start HandleKomojuWebhook: transaction_id=" . $this->getTransactionId());
 
+        //--------------------------------------------------------------------------------------------------------------
+        if ($this->isPaymentCaptured()) {
+            $this->handlePaymentCaptured();
+        }
+        //--------------------------------------------------------------------------------------------------------------
+
+        Log::info("Finish HandleKomojuWebhook: transaction_id=" . $this->getTransactionId());
+
+    }
+
+    private function handlePaymentCaptured() {
+        Log::info("Start HandleKomojuWebhook->handlePaymentCaptured: transaction_id=" . $this->getTransactionId());
         try {
             DB::beginTransaction();
             // Find order
@@ -60,13 +81,8 @@ class HandleCapturedPaymentWebhook implements ShouldQueue
             Log::error('Failed HandleCapturedPaymentWebhook > ' . $this->getTransactionId());
             Log::debug($ex);
         }
-
-        Log::info("Done HandleCapturedPaymentWebhook: transaction_id=" . $this->getTransactionId());
-
+        Log::info("Finish HandleKomojuWebhook->handlePaymentCaptured: transaction_id=" . $this->getTransactionId());
     }
 
-    public function getTransactionId()
-    {
-        return isset($this->payload['data']) ? $this->payload['data']['id'] : "";
-    }
+
 }
