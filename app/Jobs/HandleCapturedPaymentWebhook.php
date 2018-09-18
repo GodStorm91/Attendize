@@ -17,6 +17,7 @@ class HandleCapturedPaymentWebhook implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $payload;
+
     /**
      * Create a new job instance.
      *
@@ -24,7 +25,6 @@ class HandleCapturedPaymentWebhook implements ShouldQueue
      */
     public function __construct($payload)
     {
-        Log::debug($payload);
         $this->payload = json_decode($payload, true);
     }
 
@@ -65,7 +65,8 @@ class HandleCapturedPaymentWebhook implements ShouldQueue
 
     }
 
-    public function getTransactionId() {
+    public function getTransactionId()
+    {
         return isset($this->payload['data']) ? $this->payload['data']['id'] : "";
     }
 }

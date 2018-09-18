@@ -19,8 +19,10 @@ class KomojuController extends Controller
     {
         try {
             $id = uniqid();
-            Log::info("[Webhook][$id] Header: " . $request->headers);
-            Log::info("[Webhook][$id] Payload: " . $request->getContent());
+            Log::info("[Webhook][$id] ----------------------------------------------------------------------");
+            Log::info("[Webhook][$id] Header: \n" . $request->headers);
+            Log::info("[Webhook][$id] ----------------------------------------------------------------------");
+            Log::info("[Webhook][$id] Payload: \n" . $request->getContent());
             // Capture input and handle and delay handler task
             HandleCapturedPaymentWebhook::dispatch($request->getContent());
         } catch (\Exception $ex) {

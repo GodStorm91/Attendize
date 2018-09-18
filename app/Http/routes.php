@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Komoju webhook
+ * Komoju webhook (whitelisted)
  */
 Route::group(['prefix' => 'komoju'], function () {
 
     Route::any('webhook', [
-        'as'   => 'handleWebhook',
+        'as' => 'handleWebhook',
         'uses' => 'KomojuController@handleWebhook',
     ]);
 
     Route::any('payment/authorized', [
-        'as'   => 'handleAuthorizedEvent',
+        'as' => 'handleAuthorizedEvent',
         'uses' => 'WebhookController@handleAuthorizedEvent',
     ]);
 });
