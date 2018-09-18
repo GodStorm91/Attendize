@@ -9,7 +9,7 @@ class VerifyCsrfToken extends BaseVerifier
 {
     protected $except = [
         'install/*',
-        'webhook/*',
+        'komoju/webhook',
     ];
 
     /**

@@ -15,8 +15,7 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'App\Events\OrderCompletedEvent' => [
             'App\Listeners\OrderCompletedListener',
-            'App\Listeners\PaymentCapturedListener',
-        ],
+        ]
     ];
 
     /**

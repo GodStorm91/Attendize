@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * Komoju webhook
+ */
+Route::group(['prefix' => 'komoju'], function () {
+
+    Route::any('webhook', [
+        'as'   => 'handleWebhook',
+        'uses' => 'KomojuController@handleWebhook',
+    ]);
+
+    Route::any('payment/authorized', [
+        'as'   => 'handleAuthorizedEvent',
+        'uses' => 'WebhookController@handleAuthorizedEvent',
+    ]);
+});
+
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
@@ -103,22 +119,6 @@ Route::group(
         Route::get('signup/confirm_email/{confirmation_code}', [
             'as'   => 'confirmEmail',
             'uses' => 'UserSignupController@confirmEmail',
-        ]);
-    });
-
-    /**
-     * Komoju webhook
-     */
-    Route::group(['prefix' => 'webhook'], function () {
-
-        Route::any('payment/captured', [
-            'as'   => 'handleCapturedEvent',
-            'uses' => 'WebhookController@handleCapturedEvent',
-        ]);
-
-        Route::any('payment/authorized', [
-            'as'   => 'handleAuthorizedEvent',
-            'uses' => 'WebhookController@handleAuthorizedEvent',
         ]);
     });
 
