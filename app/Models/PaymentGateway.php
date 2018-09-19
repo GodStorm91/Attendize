@@ -9,5 +9,6 @@ namespace App\Models;
 class PaymentGateway extends MyBaseModel
 {
 
+	public $timestamps = false;
 
 }

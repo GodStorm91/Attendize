@@ -163,8 +163,13 @@
                     @if($event->enable_offline_payments)
                         <div class="offline_payment_toggle">
                             <div class="custom-checkbox">
-                                <input data-toggle="toggle" id="pay_offline" name="pay_offline" type="checkbox"
-                                       value="1">
+                                @if($event->enable_only_offline)
+                                    <input data-toggle="toggle" id="pay_offline" name="pay_offline" type="checkbox"
+                                           value="1" checked="checked">
+                                @else
+                                    <input data-toggle="toggle" id="pay_offline" name="pay_offline" type="checkbox"
+                                            value="1">
+                                @endif
                                 <label for="pay_offline">@lang("Public_ViewEvent.pay_using_offline_methods")</label>
                             </div>
                         </div>
@@ -188,7 +193,7 @@
 
                     @else
 
-                        @if(@$payment_gateway->is_on_site)
+                        @if(@$payment_gateway->is_on_site && !@$event->enable_only_offline)
                             <div class="online_payment">
                                 <div class="row">
                                     <div class="col-md-12">
