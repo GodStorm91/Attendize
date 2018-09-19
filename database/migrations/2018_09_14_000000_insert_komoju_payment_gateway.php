@@ -14,7 +14,7 @@ class InsertKomojuPaymentGateway extends Migration
      */
     public function up()
     {
-        PaymentGateway::where('name', 'komoju')->delete();
+        PaymentGateway::where('name', 'Komoju')->delete();
         $gateway = new PaymentGateway();
         $gateway->provider_name = 'komoju';
         $gateway->provider_url = 'https://komoju.com';
@@ -31,6 +31,6 @@ class InsertKomojuPaymentGateway extends Migration
      */
     public function down()
     {
-        PaymentGateway::where('name', 'komoju')->delete();
+        PaymentGateway::where('name', 'Komoju')->delete();
     }
 }

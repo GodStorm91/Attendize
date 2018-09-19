@@ -502,6 +502,10 @@
                                 <input {{ $event->enable_offline_payments ? 'checked="checked"' : '' }} data-toggle="toggle" id="enable_offline_payments" name="enable_offline_payments" type="checkbox" value="1">
                                 <label for="enable_offline_payments">@lang("Order.enable_offline_payments")</label>
                             </div>
+                            <div class="custom-checkbox">
+                                <input {{ $event->enable_only_offline ? 'checked="checked"' : '' }} data-toggle="toggle" id="enable_only_offline" name="enable_only_offline" type="checkbox" value="1">
+                                <label for="enable_only_offline">@lang("Order.enable_only_offline")</label>
+                            </div>
                         </div>
                         <div class="offline_payment_details" style="display: none;">
                             {!! Form::textarea('offline_payment_instructions', $event->offline_payment_instructions, ['class' => 'form-control editable']) !!}
