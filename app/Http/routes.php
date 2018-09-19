@@ -1,5 +1,21 @@
 <?php
 
+/**
+ * Komoju webhook (whitelisted)
+ */
+Route::group(['prefix' => 'komoju'], function () {
+
+    Route::any('webhook', [
+        'as' => 'handleWebhook',
+        'uses' => 'KomojuController@handleWebhook',
+    ]);
+
+    Route::any('payment/authorized', [
+        'as' => 'handleAuthorizedEvent',
+        'uses' => 'WebhookController@handleAuthorizedEvent',
+    ]);
+});
+
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),

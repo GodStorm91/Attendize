@@ -15,13 +15,11 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'App\Events\OrderCompletedEvent' => [
             'App\Listeners\OrderCompletedListener',
-        ],
+        ]
     ];
 
     /**
      * Register any other events for your application.
-     *
-     * @param \Illuminate\Contracts\Events\Dispatcher $events
      *
      * @return void
      */

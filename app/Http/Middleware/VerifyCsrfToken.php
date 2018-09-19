@@ -9,6 +9,7 @@ class VerifyCsrfToken extends BaseVerifier
 {
     protected $except = [
         'install/*',
+        'komoju/webhook',
     ];
 
     /**
@@ -18,6 +19,7 @@ class VerifyCsrfToken extends BaseVerifier
      * @param \Closure $next
      *
      * @return mixed
+     * @throws \Illuminate\Session\TokenMismatchException
      */
     public function handle($request, Closure $next)
     {
