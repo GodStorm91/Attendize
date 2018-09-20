@@ -165,7 +165,7 @@
                             <div class="custom-checkbox">
                                 @if($event->enable_only_offline)
                                     <input data-toggle="toggle" id="pay_offline" name="pay_offline" type="checkbox"
-                                           value="1" checked="checked">
+                                           value="1" checked="checked" disabled="disabled">
                                 @else
                                     <input data-toggle="toggle" id="pay_offline" name="pay_offline" type="checkbox"
                                             value="1">
