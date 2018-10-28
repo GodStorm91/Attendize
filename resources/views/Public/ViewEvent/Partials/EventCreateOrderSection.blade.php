@@ -149,6 +149,11 @@
                         </div>
                     </div>
                 </div>
+                    {!! Form::submit(trans("Public_ViewEvent.checkout_submit"), [
+                        'class' => 'btn btn-lg btn-success card-submit',
+                        'style' => 'width:100%;'
+                        ])
+                    !!}
 
                 <style>
                     .offline_payment_toggle {
