@@ -1,10 +1,8 @@
-Hi {{{$attendee->first_name}}},<br><br>
+Chào {{{$attendee->first_name}}},<br><br>
 
-We've attached your tickets to this email.<br><br>
+Cám ơn bạn đã đăng kí tham gia với VPJ<br><br>
 
-You can view your order info and download your tickets at {{route('showOrderDetails', ['order_reference' => $attendee->order->order_reference])}} anytime.<br><br>
+Chúng tôi sẽ gửi kết quả confirm đăng kí vào ngày 2018.12.01<br><br>
 
-Your order reference is <b>{{$attendee->order->order_reference}}</b>.<br>
-
-Thank you<br>
+Cám ơn bạn đã quan tâm đến sự kiện<br>
 
