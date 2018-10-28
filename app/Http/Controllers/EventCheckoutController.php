@@ -193,8 +193,8 @@ class EventCheckoutController extends Controller
             $activeAccountPaymentGateway->fill(['payment_gateway_id' => config('attendize.payment_gateway_dummy')]);
             $paymentGateway= $activeAccountPaymentGateway;
         } else {
-            $activeAccountPaymentGateway = count($event->account->active_payment_gateway) ? $event->account->active_payment_gateway : false;
-            $paymentGateway = count($event->account->active_payment_gateway) ? $event->account->active_payment_gateway->payment_gateway : false;
+            $activeAccountPaymentGateway = !empty($event->account->active_payment_gateway) ? $event->account->active_payment_gateway : false;
+            $paymentGateway = !empty($event->account->active_payment_gateway) ? $event->account->active_payment_gateway->payment_gateway : false;
        }
 
         /*
