@@ -1,13 +1,15 @@
 @extends('en.Emails.Layouts.Master')
 
 @section('message_content')
-Xin chào,<br><br>
+Xin chào,{{$order->full_name}}<br><br>
 
 Việc đăng kí của bạn cho sự kiện <b>{{$order->event->title}}</b> đã thành công.<br><br>
 
 Đây là mã số đăng kí của bạn. Xin lưu ý là việc đăng kí chưa hoàn tất.
+<br>
 Trong trường hợp số lượng người đăng kí quá đông, ban tổ chức sẽ tổ chức chọn ngẫu nhiên trong danh sách những người đăng kí.
-Thông tin xác nhận tình trạng đăng kí sẽ được gửi đến các bạn vào ngày 2018.12.01.
+Thông tin xác nhận tình trạng đăng kí sẽ được gửi đến các bạn sau.
+<br>
 Bên dưới là thông tin đăng kí của bạn:
 {{route('showOrderDetails', ['order_reference' => $order->order_reference])}}
 
