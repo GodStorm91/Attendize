@@ -26,7 +26,7 @@ return array (
   'currently_not_on_sale' => 'Currently Not On Sale',
   'cvc_number' => 'CVC number',
   'date' => 'Date',
-  'download_links' => 'Your <a title=":title" class="ticket_download_link" href=":url">tickets</a> and a confirmation email have been sent to you.',
+  'download_links' => 'Thông tin đăng kí <a title=":title" class="ticket_download_link" href=":url">tickets</a> và email xác nhận đã được gửi đến cho bạn.',
   'download_tickets' => 'Download Tickets',
   'email' => 'Email',
   'email_address' => 'Email address',
@@ -65,11 +65,11 @@ return array (
   'share_event' => 'Share Event',
   'sold_out' => 'Sold Out',
   'sub_total' => 'Sub total',
-  'thank_you_for_your_order' => 'Thank you for your order!',
+  'thank_you_for_your_order' => 'Cám ơn bạn đã đăng kí',
   'ticket' => 'Ticket',
-  'ticket_holder_information' => 'Ticket Holder Information',
+  'ticket_holder_information' => 'Thông tin đăng kí',
   'ticket_holder_n' => 'Ticket Holder :n Details',
-  'ticket_price' => 'Ticket Price',
+  'ticket_price' => 'Gía',
   'tickets' => 'Tickets',
   'tickets_are_currently_unavailable' => 'Tickets are currently unavailable',
   'time' => 'Please note you only have :time to complete this transaction before your tickets are re-released.',
@@ -78,4 +78,6 @@ return array (
   'your_information' => 'Your information',
   'your_message' => 'Your message',
   'your_name' => 'Your name',
+  'event_notes' => 'Trong trường hợp số lượng người đăng kí quá đông, ban tổ chức sẽ tổ chức chọn ngẫu nhiên trong danh sách những người đăng kí.
+Thư xác nhận đăng ký sẽ được gửi vào ngày 5 tháng 12 năm 2018.'
 );

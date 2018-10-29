@@ -54,6 +54,9 @@
                 <i class="ico ico-checkmark-circle"></i>
             </span>
             <h1>{!! @trans("Public_ViewEvent.thank_you_for_your_order") !!}</h1>
+            @if($event->id == 7)
+            <h2>{!! @trans("Public_ViewEvent.event_notes") !!}</h2>
+            @endif 
             <h2>
                 {!! @trans("Public_ViewEvent.download_links", ["title" => trans("Public_ViewEvent.download_tickets"), "url"=>route('showOrderTickets', ['order_reference' => $order->order_reference])."?download=1"]) !!}
             </h2>
