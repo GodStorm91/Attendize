@@ -10,7 +10,7 @@
          /_/    \_\__|\__\___|_| |_|\__,_|_/___\___(_)___\___/|_| |_| |_|
 
         -->
-        <title>{{{$event->title}}} - Attendize.com</title>
+        <title>{{{$event->title}}} - vietpro.jp</title>
 
 
         <meta charset="utf-8" />
@@ -27,7 +27,7 @@
         <meta property="og:image" content="{{config('attendize.cdn_url_user_assets').'/'.$event->images->first()['image_path']}}" />
         @endif
         <meta property="og:description" content="{{Str::words(strip_tags(Markdown::parse($event->description))), 20}}" />
-        <meta property="og:site_name" content="Attendize.com" />
+        <meta property="og:site_name" content="vietpro.jp" />
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
