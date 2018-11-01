@@ -168,8 +168,13 @@
                     @if($event->enable_offline_payments)
                         <div class="offline_payment_toggle">
                             <div class="custom-checkbox">
-                                <input data-toggle="toggle" id="pay_offline" name="pay_offline" type="checkbox"
-                                       value="1">
+                                @if($event->enable_only_offline)
+                                    <input data-toggle="toggle" id="pay_offline" name="pay_offline" type="checkbox"
+                                           value="1" checked="checked" disabled="disabled">
+                                @else
+                                    <input data-toggle="toggle" id="pay_offline" name="pay_offline" type="checkbox"
+                                            value="1">
+                                @endif
                                 <label for="pay_offline">@lang("Public_ViewEvent.pay_using_offline_methods")</label>
                             </div>
                         </div>
@@ -193,7 +198,7 @@
 
                     @else
 
-                        @if(@$payment_gateway->is_on_site)
+                        @if(@$payment_gateway->is_on_site && !@$event->enable_only_offline)
                             <div class="online_payment">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -260,6 +265,7 @@
             </div>
         </div>
     </div>
+    <img src="https://cdn.attendize.com/lg.png" />
 </section>
 @if(session()->get('message'))
     <script>showMessage('{{session()->get('message')}}');</script>
@@ -273,12 +279,12 @@
         key: "{{ $account_payment_gateway->config['publishableKey'] }}",
         token: function (token) {
             payForm.komojuToken.value = token.id;
-            toggleSubmitDisabled($("#komoju_pay_button"));
-            payForm.submit();
+            $(payForm).trigger('submit')
         }
     });
 
     document.getElementById("komoju_pay_button").addEventListener("click", function (e) {
+        e.preventDefault();
         handler.open({
             amount: '{{  $orderService->getGrandTotal() }}',
             endpoint: "https://komoju.com",
@@ -291,8 +297,7 @@
                 "credit_card", "konbini"
             ]
         });
-
-        e.preventDefault();
+        return false;
     });
 </script>
 @endif

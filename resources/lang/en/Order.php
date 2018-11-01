@@ -32,6 +32,7 @@ return array (
   'no_recent_orders' => 'Looks like there are no recent orders.',
   'offline_payment_instructions' => 'Enter instructions on how attendees can make payment offline.',
   'offline_payment_settings' => 'Offline Payment Settings',
+  'enable_only_offline' => 'Enable Only Offline Payment',
   'order_attendees' => 'Order Attendees',
   'order_date' => 'Order Date',
   'order_page_settings' => 'Order Page Settings',

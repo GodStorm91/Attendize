@@ -394,16 +394,6 @@ class EventCheckoutController extends Controller
                             'receipt_email' => $request->get('order_email'),
                         ];
                         break;
-                    case config('attendize.payment_gateway_komoju'):
-                        $api_key = $ticket_order['account_payment_gateway']['config']['apiKey'];
-                        $token = $request->get('komojuToken');
-
-                        $transaction_data += [
-                            'token' => $token,
-                            'api_key' => $api_key,
-                            'receipt_email' => $request->get('order_email'),
-                        ];
-                        break;
                     default:
                         Log::error('No payment gateway configured.');
                         return repsonse()->json([
@@ -417,24 +407,10 @@ class EventCheckoutController extends Controller
 
                 $response = $transaction->send();
 
-                Log::info('Purchase request sent!');
-                Log::info($response->getData());
+                if ($response->isSuccessful()) {
 
-                if ($response->isPending()) {
-
-                    // For pending payment, we complete current order with status = order_awaiting_payment.
-                    // This status will be updated later when payment is done
-                    session()->push('ticket_order_' . $event_id . '.transaction_id', $response->getTransactionReference());
-                    session()->push('ticket_order_' . $event_id . '.order_awaiting_payment', '1');
-
-                    // TODO: Save payment token?
-
-                    // Not return json in checkout page and go to order detail page directly
-                    return $this->completeOrder($event_id, false);
-
-                } else if ($response->isSuccessful()) {
-
-                    session()->push('ticket_order_' . $event_id . '.transaction_id', $response->getTransactionReference());
+                    session()->push('ticket_order_' . $event_id . '.transaction_id',
+                        $response->getTransactionReference());
 
                     return $this->completeOrder($event_id);
 
@@ -530,7 +506,6 @@ class EventCheckoutController extends Controller
             ]);
         }
 
-
     }
 
     /**
@@ -567,12 +542,7 @@ class EventCheckoutController extends Controller
             $order->first_name = $request_data['order_first_name'];
             $order->last_name = $request_data['order_last_name'];
             $order->email = $request_data['order_email'];
-            if (isset($ticket_order['order_awaiting_payment'])) {
-                $order->order_status_id = config('attendize.order_awaiting_payment');
-            } else {
-                $order->order_status_id = isset($request_data['pay_offline']) ? config('attendize.order_awaiting_payment') : config('attendize.order_complete');
-            }
-
+            $order->order_status_id = isset($request_data['pay_offline']) ? config('attendize.order_awaiting_payment') : config('attendize.order_complete');
             $order->amount = $ticket_order['order_total'];
             $order->booking_fee = $ticket_order['booking_fee'];
             $order->organiser_booking_fee = $ticket_order['organiser_booking_fee'];

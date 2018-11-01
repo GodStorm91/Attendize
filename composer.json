@@ -33,7 +33,8 @@
        "php-http/message": "^1.6",
        "predis/predis": "~1.1",
        "vinelab/http": "~1.5",
-       "godstorm91/omnipay-komoju": "dev-master"
+       "godstorm91/omnipay-komoju": "dev-master",
+       "spatie/laravel-http-logger": "^1.1"
     },
     "require-dev": {
       "phpunit/phpunit": "7.3.*",

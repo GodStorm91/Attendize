@@ -156,23 +156,23 @@ Route::group(
 
         Route::post('{event_id}/checkout/', [
             'as'   => 'postValidateTickets',
-            'uses' => 'EventCheckoutController@postValidateTickets',
+            'uses' => 'VPJEventCheckoutController@postValidateTickets',
         ]);
 
         Route::get('{event_id}/checkout/create', [
             'as'   => 'showEventCheckout',
-            'uses' => 'EventCheckoutController@showEventCheckout',
+            'uses' => 'VPJEventCheckoutController@showEventCheckout',
         ]);
 
         Route::get('{event_id}/checkout/success', [
             'as'   => 'showEventCheckoutPaymentReturn',
-            'uses' => 'EventCheckoutController@showEventCheckoutPaymentReturn',
+            'uses' => 'VPJEventCheckoutController@showEventCheckoutPaymentReturn',
         ]);
 
 
         Route::post('{event_id}/checkout/create', [
             'as'   => 'postCreateOrder',
-            'uses' => 'EventCheckoutController@postCreateOrder',
+            'uses' => 'VPJEventCheckoutController@postCreateOrder',
         ]);
     });
 
@@ -181,12 +181,12 @@ Route::group(
      */
     Route::get('order/{order_reference}', [
         'as'   => 'showOrderDetails',
-        'uses' => 'EventCheckoutController@showOrderDetails',
+        'uses' => 'VPJEventCheckoutController@showOrderDetails',
     ]);
 
     Route::get('order/{order_reference}/tickets', [
         'as'   => 'showOrderTickets',
-        'uses' => 'EventCheckoutController@showOrderTickets',
+        'uses' => 'VPJEventCheckoutController@showOrderTickets',
     ]);
 
     /*
