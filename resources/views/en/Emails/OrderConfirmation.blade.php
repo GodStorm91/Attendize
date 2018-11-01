@@ -5,6 +5,7 @@ Xin chào,{{$order->full_name}}<br><br>
 
 Việc đăng kí của bạn cho sự kiện <b>{{$order->event->title}}</b> đã thành công.<br><br>
 
+@if ($order->event->id == 7)
 Đây là mã số đăng kí của bạn. Xin lưu ý là việc đăng kí chưa hoàn tất.
 <br>
 Trong trường hợp số lượng người đăng kí quá đông, ban tổ chức sẽ tổ chức chọn ngẫu nhiên trong danh sách những người đăng kí.
@@ -12,7 +13,7 @@ Thư xác nhận đăng ký sẽ được gửi vào ngày 5 tháng 12 năm 2018
 <br>
 Bên dưới là thông tin đăng kí của bạn:
 {{route('showOrderDetails', ['order_reference' => $order->order_reference])}}
-
+@endif
 
 <h3>Thông tin chi tiết</h3>
 Mã đặt chỗ: <b>{{$order->order_reference}}</b><br>

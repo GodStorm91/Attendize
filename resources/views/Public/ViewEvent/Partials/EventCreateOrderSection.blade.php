@@ -149,12 +149,13 @@
                         </div>
                     </div>
                 </div>
+                @if ($event->id == 7)
                     {!! Form::submit(trans("Public_ViewEvent.checkout_submit"), [
                         'class' => 'btn btn-lg btn-success card-submit',
                         'style' => 'width:100%;'
                         ])
                     !!}
-
+                @endif
                 <style>
                     .offline_payment_toggle {
                         padding: 20px 0;
@@ -168,7 +169,7 @@
                     @if($event->enable_offline_payments)
                         <div class="offline_payment_toggle">
                             <div class="custom-checkbox">
-                                @if($event->enable_only_offline)
+                                @if($event->enable_only_offline && $event->id != 7)
                                     <input data-toggle="toggle" id="pay_offline" name="pay_offline" type="checkbox"
                                            value="1" checked="checked" disabled="disabled">
                                 @else
