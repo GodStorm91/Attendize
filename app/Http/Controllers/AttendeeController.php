@@ -54,6 +54,23 @@ class AttendeeController extends MyBaseController
         if ($rsvpStatus == 4){
             // 1 : completed
             $order->order_status_id = 4;
+            $attendees = $order->attendees;
+            if ($attendees) {
+                foreach ($attendees as $attendee) {
+                    $attendee->ticket->decrement('quantity_sold');
+                    $attendee->ticket->decrement('sales_volume', $attendee->ticket->price);
+                    $order->event->decrement('sales_volume', $attendee->ticket->price);
+                    $order->decrement('amount', $attendee->ticket->price);
+                    $attendee->is_cancelled = 1;
+                    $attendee->save();
+
+                    $eventStats = EventStats::where('event_id', $attendee->event_id)->where('date', $attendee->created_at->format('Y-m-d'))->first();
+                    if($eventStats){
+                        $eventStats->decrement('tickets_sold',  1);
+                        $eventStats->decrement('sales_volume',  $attendee->ticket->price);
+                    }
+                }
+            }
             $order->save();
             //Should we send cancel email here
             return view('Public.ViewEvent.OrderCancelled');
