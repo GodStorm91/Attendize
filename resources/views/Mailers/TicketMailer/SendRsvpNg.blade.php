@@ -20,5 +20,4 @@ Thân mến, <br>
 Viet Tech Day Tokyo 2018 Organizing team
 
 <br><br>
-Thank you
 @stop
