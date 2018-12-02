@@ -47,7 +47,7 @@ class RandomSendInviteEmail extends Command
         //Get the file
         Excel::load($fileName)->each(function($csvLine) use ($mailer, &$okList){
             //send mail 
-            $attendee = \App\Models\Attendee::where('email', $csvLine->get('id'));
+            $attendee = \App\Models\Attendee::find($csvLine->get('id'));
             $job = new \App\Jobs\SendAttendeeLotteryTicket($attendee);
             $okList[] = $attendee->id;
             $job->handle($mailer);
