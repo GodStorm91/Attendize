@@ -42,15 +42,18 @@ class RandomSendInviteEmail extends Command
         //
         $fileName = $this->argument('file_name');
         $sentList = array();
+        $okList = array();
         $mailer = app(\App\Mailers\AttendeeMailer::class);
         //Get the file
-        Excel::load($fileName)->each(function($csvLine) use ($mailer){
+        Excel::load($fileName)->each(function($csvLine) use ($mailer, &$okList){
             //send mail 
-            $attendee = \App\Models\Attendee::where('email', $csvLine->get('email'))->where('event_id', 7)->first();
+            $attendee = \App\Models\Attendee::where('email', $csvLine->get('id'));
             $job = new \App\Jobs\SendAttendeeLotteryTicket($attendee);
+            $okList[] = $attendee->id;
             $job->handle($mailer);
         });
 
+        $ngAttendee = \App\Models\Attendee::whereNotIn('id', $okList)->get();
         // Send email one to one
         
 
