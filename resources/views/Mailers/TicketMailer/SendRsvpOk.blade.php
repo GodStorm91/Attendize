@@ -16,7 +16,7 @@ Như đã thông báo, do quy mô hội trường có hạn trong khi số lư�
 
 <br>
 
-Và đừng quên theo dõi trang Facebook của VPJ để có thêm thông tin về chương trình!
+Và đừng quên theo dõi trang Facebook của VPJ để có thêm thông tin về chương trình!<br>
 
 <br>
 Thân mến, <br>
