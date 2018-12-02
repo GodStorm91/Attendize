@@ -103,7 +103,7 @@ class AttendeeMailer extends Mailer
 
         Mail::send('Mailers.TicketMailer.SendRsvpOk', $data, function ($message) use ($attendee) {
             $message->to($attendee->email);
-            $message->subject("[VPJ]Xác nhận đăng ký thành công Viet Tech Day Tokyo 2018");
+            $message->subject("[VPJ] Xác nhận đăng ký thành công Viet Tech Day Tokyo 2018");
 
             $file_name = $attendee->getReferenceAttribute();
             $file_path = public_path(config('attendize.event_pdf_tickets_path')) . '/' . $file_name . '.pdf';
@@ -123,7 +123,7 @@ class AttendeeMailer extends Mailer
 
         Mail::send('Mailers.TicketMailer.SendRsvpNg', $data, function ($message) use ($attendee) {
             $message->to($attendee->email);
-            $message->subject("[VPJ]Thông báo từ Viet Tech Day Tokyo 2018");
+            $message->subject("[VPJ] Thông báo từ Viet Tech Day Tokyo 2018");
         });
 
     }
