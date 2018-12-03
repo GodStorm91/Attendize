@@ -1,7 +1,7 @@
-id
-361
-348
-366
-534
-567
-550
+attendee_id
+361 -- fail -> 
+348 -- pass -> 336
+366 -- fail
+534 -- fail
+567 -- fail
+550 -- fail

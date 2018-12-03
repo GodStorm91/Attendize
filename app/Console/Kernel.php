@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\CreateDatabase::class,
         Commands\RandomAttendeeList::class,
         Commands\RandomSendInviteEmail::class,
+        Commands\RandomSendRejectEmail::class,
     ];
 
     /**
