@@ -50,6 +50,9 @@ class RandomSendRejectEmail extends Command
         Excel::load($fileName)->each(function($csvLine) use ($mailer, &$okList){
             //send mail 
             $attendee = \App\Models\Attendee::find($csvLine->get('id'));
+
+            $this->info("send reject mail for" . $attendee->id . " " . $attendee->email);
+
             $job = new \App\Jobs\SendAttendeeLotteryMissed($attendee);
             $order = $attendee->order;
             $order->order_status_id = 4;
