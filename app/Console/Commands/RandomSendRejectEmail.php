@@ -50,7 +50,26 @@ class RandomSendRejectEmail extends Command
             //send mail 
             $attendee = \App\Models\Attendee::find($csvLine->get('id'));
             $job = new \App\Jobs\SendAttendeeLotteryMissed($attendee);
-            $okList[] = $attendee->id;
+            $order = $attendee->order;
+            $order->order_status_id = 4;
+            $attendees = $order->attendees;
+            if ($attendees) {
+                foreach ($attendees as $attendee) {
+                    $attendee->ticket->decrement('quantity_sold');
+                    $attendee->ticket->decrement('sales_volume', $attendee->ticket->price);
+                    $order->event->decrement('sales_volume', $attendee->ticket->price);
+                    $order->decrement('amount', $attendee->ticket->price);
+                    $attendee->is_cancelled = 1;
+                    $attendee->save();
+
+                    $eventStats = EventStats::where('event_id', $attendee->event_id)->where('date', $attendee->created_at->format('Y-m-d'))->first();
+                    if($eventStats){
+                        $eventStats->decrement('tickets_sold',  1);
+                        $eventStats->decrement('sales_volume',  $attendee->ticket->price);
+                    }
+                }
+            }
+            $order->save();
             $job->handle($mailer);
         });
 
