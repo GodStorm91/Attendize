@@ -69,6 +69,7 @@ class CancelAttendees extends Command
                     $order->event->decrement('sales_volume', $attendee->ticket->price);
                     $order->decrement('amount', $attendee->ticket->price);
                     $attendee->is_cancelled = 1;
+                    $attendee->delete();
                     $attendee->save();
 
                     $eventStats = EventStats::where('event_id', $attendee->event_id)->where('date', $attendee->created_at->format('Y-m-d'))->first();
