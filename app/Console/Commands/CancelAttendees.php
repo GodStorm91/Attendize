@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Maatwebsite\Excel\Facades\Excel;
-
+use App\Models\EventStats;
 
 class CancelAttendees extends Command
 {
