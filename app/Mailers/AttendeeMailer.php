@@ -144,4 +144,20 @@ class AttendeeMailer extends Mailer
 
     }
 
+    public function sendCancel($attendee)
+    {
+
+        Log::info("Sending cancel to: " . $attendee->email);
+
+        $data = [
+            'attendee' => $attendee,
+        ];
+
+        Mail::send('Mailers.TicketMailer.CancelAttendee', $data, function ($message) use ($attendee) {
+            $message->to($attendee->email);
+            $message->subject("[VPJ] Thông báo vé đăng ký tham dự Viet Tech Day Tokyo 2018 đã bị huỷ");
+        });
+
+    }
+
 }
