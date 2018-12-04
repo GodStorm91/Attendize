@@ -14,7 +14,7 @@ Bạn cần xác nhận tham gia (hoặc huỷ vé) theo link dưới đây:
 
 <br>
 <br>
-LƯU Ý: Do quy định hội trường nên BTC cần phải in vé giấy cho người tham gia. Hạn xác nhận là <font color="red"><b>trước 23:59 ngày 4 tháng 12, 2018 (thứ Ba)  </font>.</b> Nếu không vé sẽ <b>TỰ ĐỘNG BỊ HUỶ. </b>    
+LƯU Ý: Do quy định hội trường nên BTC cần phải in vé giấy cho người tham gia. Hạn xác nhận là <font color="red"><b>trước 23:59 ngày 4 tháng 12, 2018 (thứ Ba).</font></b> Nếu không vé sẽ <b>TỰ ĐỘNG BỊ HUỶ. </b>    
 <br>
 
 <br>
