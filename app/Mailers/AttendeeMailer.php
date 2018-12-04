@@ -128,4 +128,20 @@ class AttendeeMailer extends Mailer
 
     }
 
+    public function sendRemindTo($attendee)
+    {
+
+        Log::info("Sending remind to: " . $attendee->email);
+
+        $data = [
+            'attendee' => $attendee,
+        ];
+
+        Mail::send('Mailers.TicketMailer.SendRemind', $data, function ($message) use ($attendee) {
+            $message->to($attendee->email);
+            $message->subject("[VPJ] Hạn xác nhận đăng ký Viet Tech Day Tokyo 2018 sắp hết");
+        });
+
+    }
+
 }
