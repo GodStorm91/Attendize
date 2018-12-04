@@ -50,8 +50,8 @@ class CancelAttendees extends Command
             $attendee = \App\Models\Attendee::find($csvLine->get('id'));
             $this->info("send cancel mail for" . $attendee->id . " " . $attendee->email);
             $job = new \App\Jobs\CancelAttendee($attendee);
-            $this->deleteAttendee($attendee);
             $job->handle($mailer);
+            $this->deleteAttendee($attendee->order);
         });
 
         $ngAttendee = \App\Models\Attendee::whereNotIn('id', $okList)->get();
