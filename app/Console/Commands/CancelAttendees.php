@@ -47,8 +47,8 @@ class CancelAttendees extends Command
         //Get the file
         Excel::load($fileName)->each(function($csvLine) use ($mailer, &$okList){
             //send mail 
-            $this->info("send cancel mail for" . $attendee->id . " " . $attendee->email);
             $attendee = \App\Models\Attendee::find($csvLine->get('id'));
+            $this->info("send cancel mail for" . $attendee->id . " " . $attendee->email);
             $job = new \App\Jobs\CancelAttendee($attendee);
             $this->deleteAttendee($attendee);
             $job->handle($mailer);
