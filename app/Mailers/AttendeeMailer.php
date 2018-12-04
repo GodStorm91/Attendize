@@ -128,7 +128,7 @@ class AttendeeMailer extends Mailer
 
     }
 
-    public function sendRemindTo($attendee)
+    public function sendRemind($attendee)
     {
 
         Log::info("Sending remind to: " . $attendee->email);
