@@ -66,7 +66,7 @@
                             <b>@lang("Order.transaction_id")</b><br> {{$order->transaction_id}}
                         </div>
                         <div class="col-sm-6 col-xs-6">
-                            @if (!isset($order->payment_gateway))
+                            @if (isset($order->payment_gateway))
                             <b>@lang("Order.payment_gateway")</b><br> <a href="{{ $order->payment_gateway->provider_url }}" target="_blank">{{$order->payment_gateway->provider_name}}</a>
                             @else
                                 No payment gateway
